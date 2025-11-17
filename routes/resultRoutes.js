@@ -2,7 +2,7 @@ import express from 'express';
 import { addResult,getAllResults,getResultsById,updateResults,resultStats } from '../controllers/admin/adminResultcontroller.js';
 import {getUserResult} from '../controllers/user/userResult.js'
 import adminProtect from "../middleware/adminMiddleware.js";
-import protect from '../middleWare/userMiddleWare.js';
+import protect from '../middleware/userMiddleWare.js';
 
 const app = express.Router();
 
