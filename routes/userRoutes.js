@@ -1,7 +1,7 @@
 import express from 'express';
 import { userSignup, userLogin, updateDetails, getUserById } from '../controllers/user/userController.js';
 import { dashboardStats } from '../controllers/user/studentDashboard.js'
-import protect from '../middleware/userMiddleWare.js';
+import protect from '../middleware/userMiddleware.js';
 import { upload } from '../config/multer.js';
 import User from '../models/userSchema.js';
 import fs from 'fs';
