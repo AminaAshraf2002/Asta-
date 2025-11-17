@@ -20,8 +20,24 @@ const app = express();
 
 // ========== MIDDLEWARE ==========
 
+// ✅ UPDATED: Allow both localhost and production domain
+const allowedOrigins = [
+  'http://localhost:4200',
+  'https://portal.astaedu.com'
+];
+
 app.use(cors({
-  origin: 'http://localhost:4200',
+  origin: function(origin, callback) {
+    // Allow requests with no origin (mobile apps, Postman, etc.)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log('❌ Blocked by CORS:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'token']
@@ -29,13 +45,18 @@ app.use(cors({
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
-// ✅ Serve uploads with CORS headers for downloads
+
+// ✅ UPDATED: Serve uploads with CORS headers for downloads
 app.use('/uploads', (req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
   next();
 }, express.static(path.join(__dirname, 'uploads')));
+
 // ========== DATABASE CONNECTION ==========
 connectDB();
 
@@ -143,7 +164,9 @@ app.listen(PORT, () => {
   console.log(`\n🚀 ============================================`);
   console.log(`✅ Server is running on port ${PORT}`);
   console.log(`📍 API Base URL: http://localhost:${PORT}`);
-  console.log(`🌐 CORS enabled for: http://localhost:4200`);
+  console.log(`🌐 CORS enabled for:`);
+  console.log(`   - http://localhost:4200`);
+  console.log(`   - https://portal.astaedu.com`);
   console.log(`\n📋 Available API Routes:`);
   console.log(`   - Attendance:    http://localhost:${PORT}/api/attendance`);
   console.log(`============================================\n`);
