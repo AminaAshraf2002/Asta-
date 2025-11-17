@@ -1,7 +1,7 @@
 import express from "express";
 import { addRegistration, getStudentRegistration } from "../controllers/user/userRegistration.js";
 import { fetchAllStudents, fetchExamDetailsById, updateExamStatus, getExamStats } from "../controllers/admin/adminexamRegistartion.js";
-import protect from "../middleware/userMiddleWare.js";
+import protect from "../middleware/userMiddleware.js";
 import adminProtect from "../middleware/adminMiddleware.js";  // ✅ ADD THIS
 
 const app = express.Router();
