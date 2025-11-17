@@ -5,7 +5,7 @@ import {
   certificatStats
 } from "../controllers/admin/adminCertificate.js";
 import { getUserCertificate } from '../controllers/user/userCertificate.js';
-import protect from "../middleWare/userMiddleWare.js";
+import protect from "../middleWare/userMiddleware.js";
 import { uploadCertificateFile } from "../config/multer.js"; // Import certificate upload
 import adminAuth from "../middleware/adminMiddleware.js"; // Import admin auth
 
