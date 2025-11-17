@@ -7,7 +7,7 @@ import {
 import { getUserCertificate } from '../controllers/user/userCertificate.js';
 import protect from "../middleWare/userMiddleWare.js";
 import { uploadCertificateFile } from "../config/multer.js"; // Import certificate upload
-import adminAuth from "../middleware/adminMiddleWare.js"; // Import admin auth
+import adminAuth from "../middleware/adminMiddleware.js"; // Import admin auth
 
 const app = express.Router();
 
